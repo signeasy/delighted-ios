@@ -104,7 +104,7 @@ class NPSComponent: UIView, Component {
         view.layer.backgroundColor = theme.slider.knobBackgroundColor.color.cgColor
         view.layer.borderWidth = 2
         view.layer.borderColor = theme.slider.knobBorderColor.color.cgColor
-        
+        view.isHidden = true
         return view
     }()
     
@@ -184,7 +184,7 @@ class NPSComponent: UIView, Component {
         }
         adjustedForInitialDisplay = true
         thumbViewLabel.isHidden = true
-        moveThumbToPercent(percent: 0.5)
+        moveThumbToPercent(percent: 1)
     }
     
     func moveThumbToPercent(percent: CGFloat, finished: (() -> ())? = nil) {
@@ -318,6 +318,9 @@ class NPSComponent: UIView, Component {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if self.thumbView.isHidden{
+            self.thumbView.isHidden = false
+        }
         switch touches.first?.view {
         case touchableThumbView:
             handlePanBegin()
