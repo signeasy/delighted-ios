@@ -184,7 +184,15 @@ class NPSComponent: UIView, Component {
         }
         adjustedForInitialDisplay = true
         thumbViewLabel.isHidden = true
-        moveThumbToPercent(percent: 1)
+        //Roshan: Change for RTL
+        if traitCollection.layoutDirection == .rightToLeft {
+            setThumbConstant(self.trackView.frame.width)
+            self.lastWholeNumber = 10
+            moveThumbToPercent(percent: 0)
+        } else {
+
+            moveThumbToPercent(percent: 1)
+        }
     }
     
     func moveThumbToPercent(percent: CGFloat, finished: (() -> ())? = nil) {
