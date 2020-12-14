@@ -471,7 +471,11 @@ extension NPSComponent {
         
         // Set value on thumb text and call selection callback after thumb shrinks
         updateThumbDiameter(size: thumbNormalSize, hideLabel: false) { [unowned self] in
-            let value = Int(self.lastWholeNumber) + self.minNumber
+            var value = Int(self.lastWholeNumber) + self.minNumber
+            //Roshan: Fix for RTL
+            if traitCollection.layoutDirection == .rightToLeft {
+                value = 10 - value
+            }
             self.onSelection(value)
         }
         
@@ -515,7 +519,13 @@ extension NPSComponent {
     }
     
     func formatNumber(number: CGFloat) -> String {
-        return "\(Int(number) + minNumber)"
+        //Roshan: Fix for RTL
+        if traitCollection.layoutDirection == .rightToLeft {
+            let max = numberOfTicks
+            return "\(max - Int(number) + minNumber)"
+        } else {
+            return "\(Int(number) + minNumber)"
+        }
     }
 }
 
@@ -561,3 +571,4 @@ private extension NPSComponent {
         return tickView
     }
 }
+
